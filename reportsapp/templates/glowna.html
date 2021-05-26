@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="body">
+<div id="container>
+    <div class="rectangle"></div>
+<div id="logo">Witaj {{user}}</div>
+<div id="zegar">Wybierz jedną z opcji</div>
+<div style="clear:both;"></div>
+
+
+<div class="square"></div>
+<div class="tile1" onclick="window.location.href='/bestproducts'">Ranking produktów</div>
+<div class="tile1" onclick="window.location.href='/totalorders'">Zamówienia</div>
+<div style="clear:both;"></div>
+<div class="tile1a" onclick="window.location.href='/warehouse'">Stany magazynowe</div>
+<div class="tile2" onclick="window.location.href='/costs'">Koszty z faktur</div>
+<div class="tile3" onclick="window.location.href='/fixedcosts'">Koszty stałe</div>
+<!--<div style="clear:both;"></div>-->
+
+<div class="tile4" onclick="window.location.href='/incomevsexpenses'">Przychody vs koszty</div>
+
+
+<div class="square"></div>
+
+
+<div class="rectangle"></div>
+
+
+</div>
+
+</div>
+{% endblock %}

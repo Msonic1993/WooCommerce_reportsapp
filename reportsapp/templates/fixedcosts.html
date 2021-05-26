@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% block content %}
+{{ form.media }}
+
+
+<div class="container-fluid">
+    <div id="calendarpicker">
+<form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+          </form>
+        </div>
+    <div id="inputform">
+<form action = "" method = "post" style="    display: inline-flex; font-size: 12px">
+    {% csrf_token %}
+    {{form1.as_p}}
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+</div>
+</form>
+<div class="table">
+     <p><center style="color:#333;"><b>Tabela przedstawia koszty stałe wprowadzone przez użytownika.</b></center></p>
+{% render_table table %}
+
+     <br><br>
+
+</div>
+
+<div class="chart" id="bargraph">
+    <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('bargraph',graphs,{});
+    </script>
+</div>
+</div>
+<br>
+
+<br>
+
+<br>
+
+{% endblock %}

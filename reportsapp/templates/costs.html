@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load querystring from django_tables2 %}
+{% load static %}
+
+<div class="container-fluid">
+    <h3><center style="color:#333;"><b>Moduł wprowadzania kosztów zakupu produktów</b></center></h3>
+
+
+
+<div id="calendarpicker">
+<form class="form-group" action = "" method = "post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    {{form_select | crispy}}
+    {{DocumentForm | crispy}}
+    <label  for="browser">Wyszukaj lub wybierz produkt z listy:</label>
+  <input list="browsers" name="browser" id="browser">
+  <datalist id="browsers">
+    {{listbox | crispy}}
+  </datalist>
+
+<br>
+
+    <div id="costsinput" style="   display: inline-flex;font-size: 13px;padding: 3px;padding-block: 6px;padding-inline: 86px;">
+    {{cost_form | crispy}}
+</div>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+</form>
+
+    </div>
+
+    <div id="tablewrapper">
+ <form class="form-inline" method="POST" action="">
+            {% csrf_token %}
+    <div class="form-group">
+            {{form_select_month_order_table|crispy}}
+        <br>
+            {{form_day|crispy}}
+    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+    </div>
+          </form>
+<div class="table">
+     <p><center style="color:#333;"><b>Koszt zakupu produktów w [PLN]</b></center></p>
+        <input style="width: 25%;" class="form-control" type="text" id="inputSearch" onkeyup="filterTableCosts()"
+                           placeholder="Szybki filtr po nazwie...">
+<a href="{% querystring '_export'='csv' %}"><button type="button" class="btn btn-success" style="float: right;margin-bottom: 5px;">Export do CSV</button></a>
+    {% render_table tablePLN %}
+      <br><br>
+    <p><center style="color:#333;"><b>Koszt zakupu produktów w [USD]</b></center></p>
+{% render_table table %}
+  </div>
+</div>
+<div class="chart" id="bargraph">
+    <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('bargraph',graphs,{});
+    </script>
+</div>
+
+</div>
+{% endblock %}

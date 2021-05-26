@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load render_table from django_tables2 %}
+{% block content %}
+{{ form.media }}
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+
+    {# Include Bootstrap 4 and jQuery #}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<div class="container-fluid">
+        <div id="calendarpicker">
+<form class="form-inline" method="POST" action="">
+            {% csrf_token %}
+    <div class="form-group">
+            {{form_select_month_order_table|crispy}}
+        <br>
+            {{form_day|crispy}}
+    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+    </div>
+          </form>
+        </div>
+
+
+<div class="table">
+{% render_table table %}
+
+     <br><br>
+
+</div>
+</div>
+
+<div class="chart" id="bargraph">
+
+    <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('bargraph',graphs,{});
+    </script>
+</div>
+<div class="chart" id="bargraph2">
+
+    <script>
+        var graphs = {{plot2 | safe}};
+        Plotly.plot('bargraph2',graphs,{});
+    </script>
+</div>
+
+<div class="chart" id="bargraph1">
+    <script>
+        var graphs = {{plot1 | safe}};
+        Plotly.plot('bargraph1',graphs,{});
+    </script>
+</div>
+{% endblock %}

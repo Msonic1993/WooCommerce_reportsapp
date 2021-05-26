@@ -1,0 +1,160 @@
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% load sitetree %}
+{% load static %}
+{# Include Bootstrap 4 and jQuery #}
+<html lang="pl">
+<head>
+
+
+    <style>img {
+  opacity: 0.5;
+}
+
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <script src="/static/js/tablefilter.js"></script>
+    <script src="/static/js/tablefiltercosts.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="/static/js/modal.js"></script>
+    <link rel="stylesheet"
+          href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569006288/BBBootstrap/choices.min.css?version=7.0.0">
+    <script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569006273/BBBootstrap/choices.min.js?version=7.0.0"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+    <title>Aplikacja Drony</title>
+
+</head>
+<body onload="document.body.style.opacity='1'">
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #212529;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <button onclick="window.location.href='/'" class="btn btn-sm btn-outline-secondary" type="button"><a
+                    class="nav-item nav-link" href="/" style="color: #edf6ff; text-decoration: none;">Strona główna
+                <span class="sr-only">(current)</span></a></button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Zamówienia
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #212529;">
+                    <button onclick="window.location.href='/totalorders'" class="btn btn-sm btn-outline-secondary"
+                            type="button"><a class="nav-item nav-link" href="/totalorders"
+                                             style="color: #edf6ff; text-decoration: none;">Zamówienia</a></button>
+                    <button onclick="window.location.href='/geoorders'" class="btn btn-sm btn-outline-secondary"
+                            type="button"><a class="nav-item nav-link" href="/geoorders"
+                                             style="color: #edf6ff; text-decoration: none;">Zamówienia w miastach</a>
+                    </button>
+
+                </div>
+            </div>
+
+            <button onclick="window.location.href='/bestproducts'" class="btn btn-sm btn-outline-secondary"
+                    type="button"><a class="nav-item nav-link" href="/bestproducts"
+                                     style="color: #edf6ff; text-decoration: none;">Ranking produktów</a></button>
+            <button onclick="window.location.href='/costs'" class="btn btn-sm btn-outline-secondary" type="button"><a
+                    class="nav-item nav-link" href="/costs" style="color: #edf6ff; text-decoration: none;">Koszty z
+                faktur</a></button>
+            <button onclick="window.location.href='/fixedcosts'" class="btn btn-sm btn-outline-secondary"
+                    type="button"><a class="nav-item nav-link" href="/fixedcosts"
+                                     style="color: #edf6ff; text-decoration: none;">Koszty stałe</a></button>
+            <button onclick="window.location.href='/incomevsexpenses'" class="btn btn-sm btn-outline-secondary"
+                    type="button"><a class="nav-item nav-link" href="/incomevsexpenses"
+                                     style="color: #edf6ff; text-decoration: none;">Przychody vs Koszty</a></button>
+            <button onclick="window.location.href='/warehouse'" class="btn btn-sm btn-outline-secondary"
+                    type="button"><a class="nav-item nav-link" href="/warehouse"
+                                     style="color: #edf6ff; text-decoration: none;">Stany magazynowe i ceny</a></button>
+
+
+        </div>
+    </div>
+</nav>
+<div class="page-header">
+    <br><br>
+    {% if user.is_authenticated %}
+    <p> Jesteś zalogowany jako : {{user}}
+        <button type="button" class="btn btn-default dropdown-toggle"><a href="/logout"> Wyloguj się</a></button>
+        <img src="https://znowodronach.pl/wp-content/uploads/2020/06/a-ten-zn%C3%B3w-o-dronach.jpg" alt="Znow o dronach"
+             style="display: inline; margin-left: 30%; margin-right: 30%; width: 5%; position: relative;">
+    </p>
+
+    {% else %}
+    <p> Niezalogowany </p>
+    {% endif %}
+
+</div>
+<div class="container" style="width:100%">
+
+    <div class="col">
+        <div class="row" style="margin-right: 5px;margin-left: 5px;">
+        </div>
+
+        </head>
+
+
+        {% if user.is_authenticated %}
+        {% block content %}
+        {% endblock %}
+        {% else %}
+
+        <div class="containerLoginAsk">
+            <h1>
+                <center>Witamy!</center>
+            </h1>
+            <div class="vertical-centerLoginAsk">
+                <a href="/login">
+                    <button type="button" class="btn btn-primary btn-lg btn-block">Kliknij tutaj by się zalogować.
+                    </button>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        <div>
+
+        </div>
+
+        <footer id="sticky-footer" class="py-4 bg-dark text-white-50" style="  background-color: #222222;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    padding: 17px;">
+            <div class="container text-center">
+                <small style="color: white;  ">Copyright &copy; 2020</small>
+            </div>
+        </footer>
+
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load querystring from django_tables2 %}
+{% load static %}
+
+<div class="container-fluid">
+
+    <h3><center style="color:#333;"><b>Moduł wyświetlania zawartości faktury </b></center></h3>
+
+    <div id="tablewrapper">
+<div class="table">
+ <a href="/invoice"> <button class="btn btn-primary"> << Wróć do listy faktur</button></a>
+     <p><center style="color:#333;"><b>Faktura zakupu towaru w [PLN]</b></center></p>
+     <input style="width: 25%;" class="form-control" type="text" id="inputSearch" onkeyup="filterTableCosts()" placeholder="Szybki filtr po nazwie...">
+<a href="{% querystring '_export'='csv' %}"><button type="button" class="btn btn-success" style="float: right;margin-bottom: 5px;">Export do CSV</button></a>
+    {% render_table tablePLN %}
+      <br><br>
+    <p><center style="color:#333;"><b>Faktura zakupu towaru w [USD]</b></center></p>
+{% render_table table %}
+
+  </div>
+</div>
+<div class="chart" id="bargraph">
+    <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('bargraph',graphs,{});
+    </script>
+</div>
+
+</div>
+{% endblock %}
